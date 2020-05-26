@@ -1,12 +1,12 @@
 package e.kerry.kerobotnrf;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.sql.Time;
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
-
+import java.util.Locale;
 
 
 import android.app.Activity;
@@ -49,6 +49,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.w3c.dom.Text;
 
 import static e.kerry.kerobotnrf.UartService.ACK_Value;
+import static e.kerry.kerobotnrf.UartService.floatToByteArray;
 
 public class MainActivity extends Activity implements RadioGroup.OnCheckedChangeListener {
     private static final int REQUEST_SELECT_DEVICE = 1;
@@ -132,6 +133,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             @Override
             public void onSensorChanged(SensorEvent sensorEvent) {
                 String message = "gyroON"; // change on artemis to receive gyroscope value
+                byte[] value;
                 if (gyroSwitch) {
                     float[] rotationMatrix = new float[16];
                     SensorManager.getRotationMatrixFromVector(
@@ -160,8 +162,14 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         getWindow().getDecorView().setBackgroundColor(Color.BLUE);
                     }
 
+                    // value = ByteBuffer.allocate(4).putFloat(orientations[0]).array();;
+                    // value = floatToByteArray(orientations[0]);
+                    message = String.format(Locale.getDefault(), "%3.3f", orientations[0]);
+                    value = message.getBytes();
+                    mService.writeRXCharacteristic(value);
+
                     // Update the log with time stamp
-                    message = Float.toString(orientations[0]);
+                    // message = Float.toString(orientations[0]);
                     String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                     listAdapter.add("[" + currentDateTimeString + "] TX: " + message);
                     messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
@@ -174,7 +182,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
 
             }
         };
-        sensorManager.registerListener(rotationVectorEventListenser, rotationVectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        // sensorManager.registerListener(rotationVectorEventListenser, rotationVectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(rotationVectorEventListenser, rotationVectorSensor, 500000); // 500000 microseconds 2 message per second
 
         // Handle Disconnect & Connect button
         btnConnectDisconnect.setOnClickListener(new View.OnClickListener() {
@@ -384,11 +393,24 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     gyroSwitch = false;
                     btnGryoscopre.setText("Gyro OFF");
                     getWindow().getDecorView().setBackgroundColor(Color.BLACK);
+                    try {
+                        sendMessage("Stop");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
 
     } //End OnCreate
+
+    private void sendMessage (String message) throws UnsupportedEncodingException {
+        byte [] value = message.getBytes("UTF-8");
+        mService.writeRXCharacteristic(value);
+        String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
+        listAdapter.add("["+currentDateTimeString+"] TX: "+ message);
+        messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
+    }
 
     private void setButtonColors(){
 
@@ -734,8 +756,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     .show();
         }
     }
-
-
 
 
 }

@@ -376,4 +376,11 @@ public class UartService extends Service {
 
         return mBluetoothGatt.getServices();
     }
+
+    // 05.25.2020 added
+    public static byte[] floatToByteArray(float value) {
+        int intBits =  Float.floatToIntBits(value);
+        return new byte[] {
+                (byte) (intBits >> 24), (byte) (intBits >> 16), (byte) (intBits >> 8), (byte) (intBits) };
+    }
 }
