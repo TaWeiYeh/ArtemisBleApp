@@ -511,6 +511,9 @@ amdtps_write_cback(dmConnId_t connId, uint16_t handle, uint8_t operation,
 
         AmdtpPacketHandler(&amdtpsCb.core, (eAmdtpPktType_t)pkt->header.pktType, pkt->len - AMDTP_CRC_SIZE_IN_PKT, pkt->data);
     }
+    // 
+    // Previous implementation in the Example8_BLE_LED 
+    //
     //if (pValue[0] > 0) //KHE Added to call bleRxTxReceoved and to mirror data back to phone
     //{
         //if (pValue[0] == 49) //KHE Decimal = 49 utf-8 = 1 ... Decimal is from phone version
@@ -523,12 +526,13 @@ amdtps_write_cback(dmConnId_t connId, uint16_t handle, uint8_t operation,
             //  to BLE_example_funcs.cpp via bleRxTxReceived below instead, as it seems easier to 
             //  maintain there and do decisions on the value in the ino file.  I suppose I could 
             //  just set s_Rcvd here to make it really simple.....oh well.   
-//        }
-//        if (pValue[0] == 50) // utf-8 = 2
-//        {
+    // }
+    // if (pValue[0] == 50) // utf-8 = 2
+    // {
             //am_hal_gpio_output_set(19); //KHE Turn on LED
             //set_led_high();
-//        } // If there is some value in the message received, send it to the bleRxTGxReceived function
+    // } // If there is some value in the message received, send it to the bleRxTGxReceived function
+    
     #ifdef AMDTP_DEBUG_ON
         debug_printf("amdtps_main.c amdtps_write_cback MESSAGE RECEIVED: pValue = %x\r\n", pValue);
         //debug_printf("Sending reply and starting timer........................................I think\n");
