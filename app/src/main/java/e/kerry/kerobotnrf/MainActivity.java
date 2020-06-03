@@ -597,10 +597,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     listAdapter.add("["+currentDateTimeString+"] TX: Setting ACK NOTIFY");
                     messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
                     Log.d(TAG, "KHE - Ack Notification Set");
-                    //tv_crctext.setText("Done with AckNotification");
-//                    b_Squeegee.setVisibility(View.VISIBLE);
-//                    b_Scrubber.setVisibility(View.VISIBLE);
-//                    b_Spray.setVisibility(View.VISIBLE);
                     b_Fwrd.setVisibility(View.VISIBLE);
                     b_Right.setVisibility(View.VISIBLE);
                     b_Stop.setVisibility(View.VISIBLE);
