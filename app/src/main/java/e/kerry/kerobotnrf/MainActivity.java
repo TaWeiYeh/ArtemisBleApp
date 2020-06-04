@@ -81,6 +81,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private Button b_Left;
     private Button b_Ack;
     private Button btnGryoscopre;
+    private Button btnJoystickView;
 
     // 2020.05.14 adding gyroscope
     private SensorManager sensorManager;
@@ -111,7 +112,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         b_Rvrse = findViewById(R.id.b_Rvrse);
         b_Left = findViewById(R.id.b_Left);
         b_Ack = findViewById(R.id.b_Ack);
-        btnGryoscopre = findViewById(R.id.btnGryoscopre); // 05.20.2020
+        btnGryoscopre = findViewById(R.id.btnGryoscopre); // 05.20.2020 TaWei added
+        btnJoystickView = findViewById(R.id.btnJoystickView); // 06.04.2020 TaWei added
         setButtonColors();
         b_Fwrd.setVisibility(View.INVISIBLE);
         b_Right.setVisibility(View.INVISIBLE);
@@ -120,12 +122,13 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         b_Left.setVisibility(View.INVISIBLE);
         b_Ack.setVisibility(View.INVISIBLE);
         btnGryoscopre.setVisibility(View.INVISIBLE);
+//        btnJoystickView.setVisibility(View.INVISIBLE);
 
 
         // Initialize the UartService Class
         service_init();
 
-        // 2020.05.14
+        // 2020.05.14 Ta-Wei edited
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         rotationVectorSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
 
@@ -184,6 +187,16 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         };
         // sensorManager.registerListener(rotationVectorEventListenser, rotationVectorSensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(rotationVectorEventListenser, rotationVectorSensor, 500000); // 500000 microseconds 2 message per second
+
+        // 06.04.2020 Ta-Wei edited
+        // JoystickView from https://github.com/efficientisoceles/JoystickView
+        btnJoystickView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(getApplicationContext(), JoystickActivity.class);
+                startActivity(newIntent);
+            }
+        });
 
         // Handle Disconnect & Connect button
         btnConnectDisconnect.setOnClickListener(new View.OnClickListener() {

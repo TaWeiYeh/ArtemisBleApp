@@ -73,7 +73,7 @@
                         android:text="Stop"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btn_select" />
+                        app:layout_constraintTop_toBottomOf="@+id/btnJoystickView" />
 
                     <ListView
                         android:id="@+id/listMessage"
@@ -162,6 +162,16 @@
                         android:text="Gyro OFF"
                         app:layout_constraintBottom_toBottomOf="@+id/b_Fwrd"
                         app:layout_constraintStart_toEndOf="@+id/b_Fwrd" />
+
+                    <Button
+                        android:id="@+id/btnJoystickView"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:text="Joystick"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_select" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
