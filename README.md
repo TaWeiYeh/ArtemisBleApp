@@ -1,6 +1,8 @@
 # ArtemisBleApp
-An Android Application connect with Artemis Nano via bluetooth connection (UART). 
+An Android Application (Cellphone) connect with Artemis Nano via bluetooth connection (UART). 
+
 Artemis Nano act as a server passively waiting to be connected from Android devices (Clients).
+This Android App could send messages using the UART service. Messages include three options, **text**, **gyroscope reading**, and two virtual **joystick reading**. 
 
 For more information, please refer links in credits and SparkFun Artemis Forum https://forum.sparkfun.com/viewforum.php?f=167. 
 
