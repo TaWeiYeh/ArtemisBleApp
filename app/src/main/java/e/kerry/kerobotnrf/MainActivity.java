@@ -122,7 +122,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         b_Left.setVisibility(View.INVISIBLE);
         b_Ack.setVisibility(View.INVISIBLE);
         btnGryoscopre.setVisibility(View.INVISIBLE);
-//        btnJoystickView.setVisibility(View.INVISIBLE);
+        btnJoystickView.setVisibility(View.INVISIBLE);
 
 
         // Initialize the UartService Class
@@ -172,7 +172,6 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     mService.writeRXCharacteristic(value);
 
                     // Update the log with time stamp
-                    // message = Float.toString(orientations[0]);
                     String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
                     listAdapter.add("[" + currentDateTimeString + "] TX: " + message);
                     messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
@@ -226,6 +225,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                             b_Rvrse.setVisibility(View.INVISIBLE);
                             b_Left.setVisibility(View.INVISIBLE);
                             btnGryoscopre.setVisibility(View.INVISIBLE);
+                            btnJoystickView.setVisibility(View.INVISIBLE);
                         }
                     }
                 }
@@ -387,11 +387,11 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
             @Override
             public void onClick(View v) {
                 String message = "ACK = 05 00 00 20 00 8d ef 02 d2";
-                    mService.writeRXCharacteristic(ACK_Value);//KHE
-                    //Update the log with time stamp
-                    String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
-                    listAdapter.add("["+currentDateTimeString+"] TX: "+ message);
-                    messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
+                mService.writeRXCharacteristic(ACK_Value);//KHE
+                //Update the log with time stamp
+                String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
+                listAdapter.add("["+currentDateTimeString+"] TX: "+ message);
+                messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
             }
         });
 
@@ -406,23 +406,23 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     gyroSwitch = false;
                     btnGryoscopre.setText("Gyro OFF");
                     getWindow().getDecorView().setBackgroundColor(Color.BLACK);
-                    try {
-                        sendMessage("Stop");
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    }
+                    sendMessage("Stop");
                 }
             }
         });
 
     } //End OnCreate
 
-    private void sendMessage (String message) throws UnsupportedEncodingException {
-        byte [] value = message.getBytes("UTF-8");
-        mService.writeRXCharacteristic(value);
-        String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
-        listAdapter.add("["+currentDateTimeString+"] TX: "+ message);
-        messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
+    private void sendMessage (String message) {
+        try {
+            byte [] value = message.getBytes("UTF-8");
+            mService.writeRXCharacteristic(value);
+            String currentDateTimeString = DateFormat.getTimeInstance().format(new Date());
+            listAdapter.add("["+currentDateTimeString+"] TX: "+ message);
+            messageListView.smoothScrollToPosition(listAdapter.getCount() - 1);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setButtonColors(){
@@ -440,6 +440,8 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
         ViewCompat.setBackgroundTintList(b_Left, ContextCompat.getColorStateList(getApplicationContext()
                 ,R.color.colorAccent));
         ViewCompat.setBackgroundTintList(btnGryoscopre, ContextCompat.getColorStateList(getApplicationContext()
+                , R.color.colorAccent));
+        ViewCompat.setBackgroundTintList(btnJoystickView, ContextCompat.getColorStateList(getApplicationContext()
                 , R.color.colorAccent));
     }
 
@@ -513,6 +515,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                         b_Left.setVisibility(View.INVISIBLE);
                         b_Ack.setVisibility(View.INVISIBLE);
                         btnGryoscopre.setVisibility(View.INVISIBLE);
+                        btnJoystickView.setVisibility(View.INVISIBLE);
                     }
                 });
             }
@@ -617,6 +620,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
                     b_Left.setVisibility(View.VISIBLE);
                     b_Ack.setVisibility(View.VISIBLE);
                     btnGryoscopre.setVisibility(View.VISIBLE);
+                    btnJoystickView.setVisibility(View.VISIBLE);
                 }
             }
         };

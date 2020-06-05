@@ -344,7 +344,6 @@ void step_Forward(int i_numCounts) {
 */
 /*************************************************************************************************/
 void set_Forward( void ) {
-  Serial.println("\n\n\n");
   s_Rcvd = "100"; //Disables case statement check in Loop Function till new message arrives
     am_hal_wdt_restart();
   //Restart the WatchDogTimer (WDT)
@@ -371,7 +370,6 @@ void set_Forward( void ) {
 */
 /*************************************************************************************************/
 void set_Reverse( void ) {
-  Serial.println("\n\n\n");
   s_Rcvd = "100"; //Disables case statement check in Loop Function till new message arrives
   //Restart the WatchDogTimer (WDT)
   am_hal_wdt_start();

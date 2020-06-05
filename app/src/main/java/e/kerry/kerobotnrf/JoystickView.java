@@ -1,6 +1,5 @@
 package e.kerry.kerobotnrf;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +13,9 @@ import android.view.View;
 
 /**
  * Created by Daniel on 7/25/2016.
+ * https://github.com/efficientisoceles/JoystickView
+ *
+ * Modified by TaWei on 06/04/2020.
  */
 public class JoystickView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener
 {
@@ -131,9 +133,9 @@ public class JoystickView extends SurfaceView implements SurfaceHolder.Callback,
                     joystickCallback.onJoystickMoved((constrainedX-centerX)/baseRadius, (constrainedY-centerY)/baseRadius, getId());
                 }
             }
-            else
+            else {
                 drawJoystick(centerX, centerY);
-            // joystickCallback.onJoystickMoved(0,0,getId());
+            }
         }
         return true;
     }
